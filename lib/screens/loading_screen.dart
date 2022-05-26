@@ -7,6 +7,7 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  // permision func
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -45,9 +46,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocation() async {
+    _determinePosition();
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.low);
     print(position);
+  }
+
+  void initState() {
+    super.initState();
+
+    getLocation();
   }
 
   @override
@@ -57,8 +65,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
         child: RaisedButton(
           onPressed: () {
             //Get the current location
-            getLocation();
-            _determinePosition();
           },
           child: Text('Get Location'),
         ),
